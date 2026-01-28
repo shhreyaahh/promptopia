@@ -1,11 +1,5 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Missing environment variable: MONGODB_URI');
-}
-
 let cached = global.mongoose;
 
 if (!cached) {
@@ -13,6 +7,12 @@ if (!cached) {
 }
 
 export const connectToDB = async () => {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error('Missing environment variable: MONGODB_URI');
+  }
+
   mongoose.set('strictQuery', true);
 
   if (cached.conn) {
